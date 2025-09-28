@@ -1,3 +1,5 @@
+// Arquivo: src/App.jsx
+
 import React, { useState, useCallback } from 'react';
 import { AuthProvider, useAuth } from './firebase/AuthContext'; 
 import AventurasList from './components/AventurasList.jsx'; 
@@ -11,6 +13,7 @@ const AppWrapper = () => {
   const [listKey, setListKey] = useState(0); 
   const [activeFilter, setActiveFilter] = useState('Todos'); 
   const [isFormVisible, setIsFormVisible] = useState(false); 
+  const MAX_FORM_HEIGHT = '500px'; 
   const { currentUser, logout } = useAuth(); 
 
   const handleAdventureAdded = useCallback(() => {
@@ -22,13 +25,11 @@ const AppWrapper = () => {
     setActiveFilter(newFilter);
   }, []);
 
-  // CORREÇÃO DO FUNDO: Removemos o background daqui. Ele será definido no App.css
+  // Estilo principal da aplicação (fundo fixo no CSS global)
   const appStyle = { 
-    // Altura mínima mantida para que o conteúdo preencha a tela
     minHeight: '100vh', 
     padding: '20px 0', 
-    // Removida: background: '#1c1c1c'
-    color: '#f0f0f0', // Texto principal (fora dos cartões) claro
+    color: '#f0f0f0', 
     fontFamily: 'sans-serif'
   };
   
@@ -47,7 +48,7 @@ const AppWrapper = () => {
   // Estilo do botão de adição
   const addButtonStyle = {
     padding: '12px 25px',
-    backgroundColor: isFormVisible ? '#ff6b6b' : '#2196f3', // Mudar cor ao expandir
+    backgroundColor: isFormVisible ? '#ff6b6b' : '#2196f3',
     color: 'white',
     border: 'none',
     borderRadius: '8px',
@@ -82,28 +83,26 @@ const AppWrapper = () => {
       
       {/* Container que esconde/mostra o Formulário */}
       <div style={{ 
-        height: isFormVisible ? 'auto' : '0',
-        maxHeight: isFormVisible ? '500px' : '0',
+        height: isFormVisible ? MAX_FORM_HEIGHT : '0',
+        maxHeight: isFormVisible ? MAX_FORM_HEIGHT : '0', 
         overflow: 'hidden',
         opacity: isFormVisible ? 1 : 0,
-        transition: 'max-height 0.5s ease-in-out, opacity 0.3s ease-in-out',
+        transition: 'height 0.5s ease-in-out, opacity 0.3s ease-in-out',
         marginBottom: isFormVisible ? '30px' : '0',
       }}>
         <AdventureForm onAdventureAdded={handleAdventureAdded} /> 
       </div>
 
+      {/* ÁREA PRINCIPAL (LISTA E FILTROS) */}
       <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'flex-start', 
-        gap: '40px', 
+        // Removido o display: flex aqui para que a lista use 100% da largura
         maxWidth: '1200px', 
-        margin: '0 auto',
-        flexWrap: 'wrap'
+        margin: '0 auto', // Centraliza o conteúdo
+        padding: '0 10px' // Padding para evitar que o conteúdo grude nas bordas
       }}>
         
         {/* Área Principal (Filtros e Lista) */}
-        <div style={{ width: '100%', maxWidth: '900px' }}>
+        <div style={{ width: '100%' }}>
             <FilterBar activeFilter={activeFilter} onFilterChange={handleFilterChange} />
 
             {/* Lista de Aventuras */}
@@ -128,4 +127,3 @@ function App() {
 }
 
 export default App;
-

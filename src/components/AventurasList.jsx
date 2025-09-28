@@ -64,7 +64,7 @@ const AventurasList = ({ activeFilter }) => {
 
     try {
         await updateDoc(adventureRef, { status: newStatus });
-        fetchAventuras(); 
+        fetchAventuras(); // Força a atualização dos dados
         
     } catch (error) {
         console.error("Erro ao atualizar status: ", error);
@@ -93,16 +93,15 @@ const AventurasList = ({ activeFilter }) => {
     return <h2 style={{ textAlign: 'center', color: 'white' }}>Carregando aventuras de amor...</h2>;
   }
 
-  // Estilos de LAYOUT GRID: Corrigido para Mobile (aplica espaçamento interno)
+  // Estilos de LAYOUT GRID: Garante colunas no desktop
   const gridContainerStyle = {
     display: 'grid',
-    // Colunas: Garante 1fr no celular, 2 colunas no desktop
-    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
+    // CORREÇÃO FINAL: Garante que o minmax use um valor mínimo menor (200px) para não cortar em celulares
+    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
     gap: '20px', 
     maxWidth: '1200px', 
     margin: '0 auto',
-    // Adicionado um padding horizontal para evitar que os cartões grudem na borda da tela
-    padding: '0 20px', 
+    padding: '0 20px',
     listStyle: 'none', 
   };
   
@@ -117,7 +116,6 @@ const AventurasList = ({ activeFilter }) => {
     cursor: 'pointer',
     minHeight: '150px',
     position: 'relative',
-    // NOVO: Garante que o cartão ocupe 100% da sua célula Grid
     width: '100%', 
     boxSizing: 'border-box',
   };
