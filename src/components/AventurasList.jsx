@@ -16,14 +16,11 @@ const AventurasList = ({ activeFilter }) => {
     }
     return 'Pendente'; 
   };
-  
-  // Função de Fetch para puxar TODOS os dados do Firebase
+
   const fetchAventuras = async () => {
     try {
         const colRef = collection(db, 'aventuras'); 
-        // Ordena por título, mas a ordenação final por data é feita no cliente
         const q = query(colRef, orderBy("titulo", "asc"));
-        
         const snapshot = await getDocs(q);
         
         const aventurasData = snapshot.docs.map(doc => ({
@@ -67,7 +64,7 @@ const AventurasList = ({ activeFilter }) => {
 
     try {
         await updateDoc(adventureRef, { status: newStatus });
-        fetchAventuras(); // Força a atualização dos dados
+        fetchAventuras(); 
         
     } catch (error) {
         console.error("Erro ao atualizar status: ", error);
@@ -96,15 +93,16 @@ const AventurasList = ({ activeFilter }) => {
     return <h2 style={{ textAlign: 'center', color: 'white' }}>Carregando aventuras de amor...</h2>;
   }
 
-  // Estilos de LAYOUT GRID: Garante colunas no desktop
+  // Estilos de LAYOUT GRID: Corrigido para Mobile (aplica espaçamento interno)
   const gridContainerStyle = {
     display: 'grid',
-    // NOVO: Colunas flexíveis com mínimo de 280px. Isso cria o efeito coluna
+    // Colunas: Garante 1fr no celular, 2 colunas no desktop
     gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
     gap: '20px', 
     maxWidth: '1200px', 
     margin: '0 auto',
-    padding: '0 20px',
+    // Adicionado um padding horizontal para evitar que os cartões grudem na borda da tela
+    padding: '0 20px', 
     listStyle: 'none', 
   };
   
@@ -119,6 +117,9 @@ const AventurasList = ({ activeFilter }) => {
     cursor: 'pointer',
     minHeight: '150px',
     position: 'relative',
+    // NOVO: Garante que o cartão ocupe 100% da sua célula Grid
+    width: '100%', 
+    boxSizing: 'border-box',
   };
 
   return (

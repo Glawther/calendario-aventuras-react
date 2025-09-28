@@ -9,28 +9,34 @@ const FilterBar = ({ activeFilter, onFilterChange }) => {
     
     // Estilo base do botão
     const buttonBaseStyle = {
-        padding: '8px 15px',
+        padding: '8px 12px', 
         margin: '5px',
         borderRadius: '20px',
         border: '1px solid #e91e63',
         cursor: 'pointer',
         transition: 'all 0.3s',
-        fontSize: '14px',
+        fontSize: '13px', 
         fontWeight: 'bold',
         backgroundColor: 'transparent',
         color: 'white',
+        flexShrink: 0, 
     };
 
     return (
         <div style={{ margin: '20px auto', textAlign: 'center', maxWidth: '600px' }}>
             <h3 style={{ color: 'white', marginBottom: '10px' }}>Filtrar por Status:</h3>
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+            <div style={{ 
+                display: 'flex', 
+                flexWrap: 'wrap', 
+                justifyContent: 'center',
+                // Adicionado espaçamento interno para evitar que grude nas laterais
+                padding: '0 5px' 
+            }}>
                 {statusOptions.map(status => {
                     const isActive = status === activeFilter;
                     
                     const buttonStyle = {
                         ...buttonBaseStyle,
-                        // Estilo se o filtro estiver ativo
                         backgroundColor: isActive ? '#e91e63' : 'transparent',
                         color: isActive ? 'white' : '#e91e63',
                         borderColor: isActive ? '#e91e63' : '#e91e63',
