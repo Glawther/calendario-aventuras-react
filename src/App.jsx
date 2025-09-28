@@ -1,5 +1,3 @@
-// Arquivo: src/App.jsx
-
 import React, { useState, useCallback } from 'react';
 import { AuthProvider, useAuth } from './firebase/AuthContext'; 
 import AventurasList from './components/AventurasList.jsx'; 
@@ -12,7 +10,7 @@ import './App.css';
 const AppWrapper = () => {
   const [listKey, setListKey] = useState(0); 
   const [activeFilter, setActiveFilter] = useState('Todos'); 
-  const [isFormVisible, setIsFormVisible] = useState(false); // ESTADO DE VISIBILIDADE DO FORM
+  const [isFormVisible, setIsFormVisible] = useState(false); 
   const { currentUser, logout } = useAuth(); 
 
   const handleAdventureAdded = useCallback(() => {
@@ -24,17 +22,22 @@ const AppWrapper = () => {
     setActiveFilter(newFilter);
   }, []);
 
+  // CORREÇÃO DO FUNDO: Removemos o background daqui. Ele será definido no App.css
   const appStyle = { 
+    // Altura mínima mantida para que o conteúdo preencha a tela
     minHeight: '100vh', 
     padding: '20px 0', 
-    backgroundColor: '#333'
+    // Removida: background: '#1c1c1c'
+    color: '#f0f0f0', // Texto principal (fora dos cartões) claro
+    fontFamily: 'sans-serif'
   };
   
   if (!currentUser) {
     return (
       <div style={appStyle}>
         <Login />
-        <footer style={{ color: 'white', marginTop: '40px', fontSize: '12px', textAlign: 'center' }}>
+        {/* Footer adaptado para fundo escuro */}
+        <footer style={{ color: '#aaa', marginTop: '40px', fontSize: '12px', textAlign: 'center' }}>
             Feito com ❤️ para o nosso futuro.
         </footer>
       </div>
@@ -67,7 +70,7 @@ const AppWrapper = () => {
         </button>
       </div>
 
-      {/* NOVO: Botão de Adicionar e Container de Expansão */}
+      {/* Botão de Adicionar e Container de Expansão */}
       <div style={{ textAlign: 'center', marginBottom: '30px' }}>
         <button 
           onClick={() => setIsFormVisible(!isFormVisible)}
@@ -80,16 +83,14 @@ const AppWrapper = () => {
       {/* Container que esconde/mostra o Formulário */}
       <div style={{ 
         height: isFormVisible ? 'auto' : '0',
-        maxHeight: isFormVisible ? '500px' : '0', // Adiciona max-height para transição suave
+        maxHeight: isFormVisible ? '500px' : '0',
         overflow: 'hidden',
         opacity: isFormVisible ? 1 : 0,
         transition: 'max-height 0.5s ease-in-out, opacity 0.3s ease-in-out',
         marginBottom: isFormVisible ? '30px' : '0',
       }}>
-        {/* Formulário (agora centralizado) */}
         <AdventureForm onAdventureAdded={handleAdventureAdded} /> 
       </div>
-      {/* FIM DA EXPANSÃO */}
 
       <div style={{ 
         display: 'flex', 
@@ -111,9 +112,9 @@ const AppWrapper = () => {
 
       </div>
       
-      <footer style={{ color: 'white', marginTop: '40px', fontSize: '12px', textAlign: 'center' }}>
+      <footer style={{ color: '#aaa', marginTop: '40px', fontSize: '12px', textAlign: 'center' }}>
           Feito com ❤️ para o nosso futuro.
-      </footer>
+        </footer>
     </div>
   );
 };
@@ -127,3 +128,4 @@ function App() {
 }
 
 export default App;
+

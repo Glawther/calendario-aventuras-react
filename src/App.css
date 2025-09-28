@@ -40,3 +40,12 @@
 .read-the-docs {
   color: #888;
 }
+/* Arquivo: src/index.css */
+body {
+  /* Fundo escuro fixo, garantindo que o scroll seja suave */
+  background-color: #1c1c1c; 
+  /* Remove margens padrão */
+  margin: 0; 
+  /* Garante que a aplicação ocupe toda a altura */
+  min-height: 100vh;
+}
